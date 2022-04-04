@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Расчёт</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <form action="/" class="decor" method="post" enctype="multipart/form-data">
+      <div class="form-left-decoration"></div>
+      <div class="form-right-decoration"></div>
+      <div class="circle"></div>
+      <div class="form-inner">
+        <h1>Расчёт "{{target}}"</h1>
+        <h2>Результат прогноза: {{result}}</h2>
+        {% if error %}
+        <h1>Ошибка в переменной " {{error['name']}} ", невозможно преобразовать в число значение " {{error['value']}} "</h1>
+        {% endif %}
+        <input type="text" placeholder="Плотность, кг/м3" name="density">
+        <input type="text" placeholder="Модуль упругости, ГПа" name="elastic_modulus">
+        <input type="text" placeholder="Количество отвердителя, м.%" name="hardener_amount">
+        <input type="text" placeholder="Содержание эпоксидных групп,%_2" name="epoxy_groups">
+        <input type="text" placeholder="Температура вспышки, С_2" name="flashpoint_temp">
+        <input type="text" placeholder="Поверхностная плотность, г/м2" name="surface_density">
+        <input type="text" placeholder="Потребление смолы, г/м2" name="resin_cons">
+        <input type="text" placeholder="Угол нашивки, град" name="patching_angle">
+        <input type="text" placeholder="Шаг нашивки" name="patching_step">
+        <input type="text" placeholder="Плотность нашивки" name="patching_density">
+        <button type="submit" href="/">Рассчитать</button>
+      </div>
+    </form>
+  </body>
+</html>
