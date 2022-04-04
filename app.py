@@ -2,16 +2,12 @@ from flask import Flask, request, render_template
 from config import TARGET_VAR, INPUTS_MAPPER
 from predictor import GradientBoostingPredictor
 from utils import convert_formdata, create_dataframe_from_formdata, preprocess_df
-import pandas as pd
 
 app = Flask(__name__)
 
 
-mock_result = 228
-
-
 @app.route('/', methods=['GET', 'POST'])
-def hello_world():
+def predict_result():
     prediction_results = 'Расчёт не запущен'
     error = dict()
     if request.method == 'POST':
@@ -28,8 +24,6 @@ def hello_world():
                     break
         if not error:
             df = create_dataframe_from_formdata(form_data=float_data, mapper=INPUTS_MAPPER)
-            #res = predictor.preprocessor.fit_transform(df)
-            #normalized_df = pd.DataFrame(res, columns=df.columns)
             normalized_df = preprocess_df(df, preprocessor=predictor.preprocessor)
             prediction_results = predictor.model.predict(normalized_df)[0]
     return render_template('index.html', result=prediction_results, target=TARGET_VAR, error=error)
